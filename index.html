@@ -506,17 +506,26 @@
       });
     })();
 
-    // On phones, a follow bar slides up once the hero (and its own follow
-    // button) has scrolled away.
+    // On phones, a follow bar slides up for the middle of the page only:
+    // the hero and the closing CTA/footer have follow buttons of their own,
+    // and the bar must never sit on top of them.
     (function () {
       var bar = document.getElementById("follow-bar");
-      var hero = document.querySelector(".hero");
-      if (!bar || !hero || !("IntersectionObserver" in window)) return;
-      new IntersectionObserver(function (entries) {
-        var heroVisible = entries[0].isIntersecting;
-        bar.classList.toggle("show", !heroVisible);
-        bar.setAttribute("aria-hidden", String(heroVisible));
-      }).observe(hero);
+      if (!bar || !("IntersectionObserver" in window)) return;
+      var covered = new Set();
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) covered.add(entry.target);
+          else covered.delete(entry.target);
+        });
+        var show = covered.size === 0;
+        bar.classList.toggle("show", show);
+        bar.setAttribute("aria-hidden", String(!show));
+      });
+      [".hero", ".cta-band", "footer"].forEach(function (sel) {
+        var el = document.querySelector(sel);
+        if (el) observer.observe(el);
+      });
     })();
 
     // Comic panel slam-in as sections scroll into view. Bursts inside a
