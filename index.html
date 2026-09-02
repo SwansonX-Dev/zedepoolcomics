@@ -274,6 +274,17 @@
     footer a:hover { text-decoration: underline; }
     footer .fine { margin-top: 10px; font-size: 0.78rem; color: #5c789f; }
 
+    /* On phones the text runs full-width, so the callouts move up into each
+       section's padding where nothing else lives, and shrink. */
+    @media (max-width: 760px) {
+      .burst { font-size: 1rem; padding: 24px 20px; }
+      section { padding-top: 96px; }
+      .wrap > .burst { top: -78px; right: 6px; left: auto; }
+      .cta-band { padding-top: 104px; }
+      .cta-band > .burst { top: 14px; right: 14px; left: auto; }
+      .hero-logo .burst { top: -22px; right: -8px; }
+    }
+
     /* Respect users who prefer stillness. */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
