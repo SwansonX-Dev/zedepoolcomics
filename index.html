@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZedePool Comics — Live comic book auctions on Whatnot</title>
+  <meta name="description" content="ZedePool Comics sells comic books live on Whatnot — key issues, slabs, raw books, and auction steals. Follow the show and never miss a drop.">
+  <link rel="icon" type="image/jpeg" href="assets/avatar.jpg">
+  <meta property="og:title" content="ZedePool Comics — Live on Whatnot">
+  <meta property="og:description" content="Comic books sold live: key issues, slabs, raw books, and auction steals. Follow ZedePool Comics on Whatnot.">
+  <meta property="og:image" content="assets/avatar.jpg">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0b1e3a;
+      --navy-deep: #071427;
+      --blue: #2f7fd3;
+      --blue-bright: #4aa3ff;
+      --yellow: #ffd52e;
+      --yellow-deep: #f5b800;
+      --ink: #0b1e3a;
+      --paper: #f6f9ff;
+      --white: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+    }
+    .display { font-family: "Bangers", "Inter", cursive; letter-spacing: 0.03em; }
+
+    /* Halftone comic texture */
+    .halftone {
+      background-image: radial-gradient(rgba(255,255,255,0.10) 1.2px, transparent 1.2px);
+      background-size: 14px 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Bangers", cursive;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      border-radius: 14px;
+      padding: 14px 28px;
+      text-decoration: none;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--ink);
+      background: var(--yellow-deep);
+    }
+    .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(74,163,255,0.35), transparent 55%),
+        radial-gradient(ellipse at 85% 85%, rgba(47,127,211,0.28), transparent 50%),
+        linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+      color: var(--white);
+      padding: 64px 24px 88px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-copy { flex: 1 1 420px; min-width: 300px; }
+    .kicker {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      border: 2px solid var(--yellow);
+      border-radius: 999px;
+      padding: 5px 14px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5.2rem);
+      line-height: 0.95;
+      text-shadow: 4px 4px 0 rgba(0,0,0,0.35);
+    }
+    .hero h1 .pop { color: var(--blue-bright); }
+    .hero p.lede {
+      margin: 18px 0 30px;
+      font-size: 1.15rem;
+      color: #c9dcf5;
+      max-width: 46ch;
+    }
+    .live-dot {
+      display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+      background: #ff4d4d; margin-right: 8px;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,77,77,0.55); }
+      50% { box-shadow: 0 0 0 9px rgba(255,77,77,0); }
+    }
+    .hero-note { margin-top: 14px; font-size: 0.9rem; color: #9db8dd; }
+
+    .hero-logo {
+      flex: 0 0 auto;
+      background: var(--white);
+      border: 4px solid var(--ink);
+      border-radius: 22px;
+      box-shadow: 10px 10px 0 rgba(0,0,0,0.35);
+      padding: 18px;
+      transform: rotate(3deg);
+    }
+    .hero-logo img { display: block; width: min(240px, 60vw); height: auto; border-radius: 10px; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 72px 24px; }
+    .wrap { max-width: 1000px; margin: 0 auto; }
+    .section-title {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+    .section-sub { color: #47638c; margin-bottom: 40px; max-width: 60ch; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
+    .card {
+      background: var(--white);
+      border: 3px solid var(--ink);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 26px 22px;
+    }
+    .card .emoji { font-size: 2rem; }
+    .card h3 { font-family: "Bangers", cursive; font-size: 1.5rem; letter-spacing: 0.04em; margin: 10px 0 6px; color: var(--navy); }
+    .card p { font-size: 0.95rem; color: #3d5675; }
+
+    /* ---------- How it works ---------- */
+    .how { background: var(--navy); color: var(--white); }
+    .how .section-title { color: var(--white); }
+    .how .section-sub { color: #b7cdea; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; counter-reset: step; }
+    .step {
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 16px;
+      padding: 26px 22px;
+      background: rgba(255,255,255,0.04);
+    }
+    .step-num {
+      font-family: "Bangers", cursive;
+      font-size: 2.4rem;
+      color: var(--yellow);
+      line-height: 1;
+    }
+    .step h3 { margin: 10px 0 6px; font-size: 1.1rem; }
+    .step p { font-size: 0.95rem; color: #b7cdea; }
+
+    /* ---------- CTA band ---------- */
+    .cta-band {
+      background: var(--yellow);
+      border-top: 4px solid var(--ink);
+      border-bottom: 4px solid var(--ink);
+      text-align: center;
+      padding: 60px 24px;
+    }
+    .cta-band h2 { font-size: clamp(2.2rem, 5.5vw, 3.4rem); color: var(--ink); margin-bottom: 22px; }
+    .cta-band .btn { background: var(--navy); color: var(--white); }
+    .cta-band .btn:hover { background: var(--navy-deep); }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--navy-deep);
+      color: #9db8dd;
+      text-align: center;
+      padding: 36px 24px;
+      font-size: 0.9rem;
+    }
+    footer a { color: var(--blue-bright); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer .fine { margin-top: 10px; font-size: 0.78rem; color: #5c789f; }
+  </style>
+</head>
+<body>
+
+  <header class="hero halftone">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="kicker"><span class="live-dot"></span>Selling live on Whatnot</span>
+        <h1 class="display">ZedePool <span class="pop">Comics</span></h1>
+        <p class="lede">
+          Comic books sold live — key issues, graded slabs, raw books, and
+          auction steals that start at a buck. Pull up a chair, hit follow,
+          and catch the next show.
+        </p>
+        <a class="btn" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
+          ▶&nbsp; Follow on Whatnot
+        </a>
+        <p class="hero-note">Free to follow — you'll get notified every time the show goes live.</p>
+      </div>
+      <div class="hero-logo">
+        <img src="assets/avatar.jpg" alt="ZedePool Comics logo" width="240" height="240">
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <h2 class="section-title display">What's on the show</h2>
+      <p class="section-sub">Every stream is a dig through the boxes — here's the kind of stuff that crosses the table.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="emoji">🔑</div>
+          <h3>Key Issues</h3>
+          <p>First appearances, origins, and the books collectors hunt for.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">💎</div>
+          <h3>Graded Slabs</h3>
+          <p>Certified books, ready for the shelf — bid live and watch them cross.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">📚</div>
+          <h3>Raw Books</h3>
+          <p>Runs, singles, and long-box finds across every era.</p>
+        </div>
+        <div class="card">
+          <div class="emoji">🔨</div>
+          <h3>Auction Steals</h3>
+          <p>Low-start auctions all show long — the price is whatever the room says it is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how halftone">
+    <div class="wrap">
+      <h2 class="section-title display">New to Whatnot?</h2>
+      <p class="section-sub">It's live shopping — like a comic shop, an auction house, and a hangout in one stream. Three steps and you're in.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Grab the app (or use the web)</h3>
+          <p>Whatnot is free on iOS, Android, and right in your browser.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Follow ZedePool Comics</h3>
+          <p>Hit follow and you'll get a ping whenever the show goes live.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Bid, win, done</h3>
+          <p>Everything ships straight to your door. Buyer protection is built in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2 class="display">Don't miss the next drop.</h2>
+    <a class="btn" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
+      ▶&nbsp; Follow @zedepoolcomics
+    </a>
+  </section>
+
+  <footer>
+    <p>
+      <strong>ZedePool Comics</strong> ·
+      <a href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">whatnot.com/user/zedepoolcomics</a>
+    </p>
+    <p class="fine">© 2026 ZedePool Comics. Site by <a href="https://swansonx.com" target="_blank" rel="noopener">SwansonX</a>.</p>
+  </footer>
+
+</body>
+</html>
