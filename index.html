@@ -3,16 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ZedePool Comics — Live comic book auctions on Whatnot</title>
-  <meta name="description" content="ZedePool Comics sells comic books live on Whatnot: key issues, slabs, raw books, and auction steals. Follow the show and never miss a drop.">
-  <link rel="icon" type="image/jpeg" href="assets/avatar.jpg">
-  <meta property="og:title" content="ZedePool Comics, live on Whatnot">
-  <meta property="og:description" content="Comic books sold live: key issues, slabs, raw books, and auction steals. Follow ZedePool Comics on Whatnot.">
-  <meta property="og:image" content="assets/logo-final.jpg">
+  <title>ZedePool Comics | Live Comic Book Auctions on Whatnot</title>
+  <meta name="description" content="ZedePool Comics sells comic books live on Whatnot: key issues, graded slabs, raw books, and auction steals. Follow the show and never miss a drop.">
+  <link rel="canonical" href="https://zedepoolcomics.vercel.app/">
+  <meta name="theme-color" content="#0b1e3a">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:title" content="ZedePool Comics | Live on Whatnot">
+  <meta property="og:description" content="Comic books sold live: key issues, graded slabs, raw books, and auction steals. Follow ZedePool Comics on Whatnot.">
+  <meta property="og:url" content="https://zedepoolcomics.vercel.app/">
+  <meta property="og:image" content="https://zedepoolcomics.vercel.app/assets/logo-final.jpg">
+  <meta property="og:image:width" content="640">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="ZedePool Comics wolf logo bursting through a comic panel">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZedePool Comics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZedePool Comics | Live on Whatnot">
+  <meta name="twitter:description" content="Comic books sold live: key issues, graded slabs, raw books, and auction steals.">
+  <meta name="twitter:image" content="https://zedepoolcomics.vercel.app/assets/logo-final.jpg">
+  <link rel="preload" as="image" href="assets/logo-final.jpg" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;800&display=swap"></noscript>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ZedePool Comics",
+    "url": "https://zedepoolcomics.vercel.app/",
+    "logo": "https://zedepoolcomics.vercel.app/assets/logo-final.jpg",
+    "description": "Comic book seller hosting live auctions and sales on Whatnot: key issues, graded slabs, raw books, and low-start auctions.",
+    "sameAs": ["https://www.whatnot.com/user/zedepoolcomics"]
+  }
+  </script>
   <style>
     :root {
       --navy: #0b1e3a;
@@ -34,7 +59,24 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    .display { font-family: "Bangers", "Inter", cursive; letter-spacing: 0.03em; }
+    .display { font-family: "Bangers", "Inter", cursive; letter-spacing: 0.03em; text-wrap: balance; }
+
+    ::selection { background: var(--yellow); color: var(--ink); }
+    :focus-visible { outline: 3px solid var(--blue-bright); outline-offset: 3px; border-radius: 4px; }
+
+    .icon-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--paper);
+      border: 2.5px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .icon-badge svg { width: 26px; height: 26px; stroke: var(--navy); stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .btn svg.play { width: 16px; height: 16px; fill: currentColor; }
 
     /* Halftone comic texture, slowly drifting */
     .halftone {
@@ -222,7 +264,7 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .card:hover { transform: translate(-3px, -3px) rotate(-0.6deg); box-shadow: 9px 9px 0 var(--ink); }
-    .card .emoji { font-size: 2rem; }
+    .card .icon-badge { margin-bottom: 4px; }
     .card h3 { font-family: "Bangers", cursive; font-size: 1.5rem; letter-spacing: 0.04em; margin: 10px 0 6px; color: var(--navy); }
     .card p { font-size: 0.95rem; color: #3d5675; }
 
@@ -305,13 +347,13 @@
           and catch the next show.
         </p>
         <a class="btn" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
-          ▶&nbsp; Follow on Whatnot
+          <svg class="play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg> Follow on Whatnot
         </a>
         <p class="hero-note">Free to follow. You'll get notified every time the show goes live.</p>
       </div>
       <div class="hero-logo">
         <span class="burst" style="top:-30px; right:-26px; animation-delay: 0.9s, 1.4s;">POW!</span>
-        <video id="logo-sting" src="assets/logo-sting.mp4" poster="assets/logo-final.jpg"
+        <video id="logo-sting" src="assets/logo-sting.mp4" poster="assets/logo-final.jpg" width="720" height="720"
                muted playsinline preload="auto" title="Click to replay"
                style="cursor:pointer" aria-label="ZedePool Comics animated logo"></video>
       </div>
@@ -325,22 +367,22 @@
       <p class="section-sub reveal">Every stream is a dig through the boxes. Here's the kind of stuff that crosses the table.</p>
       <div class="cards">
         <div class="card reveal">
-          <div class="emoji">🔑</div>
+          <div class="icon-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
           <h3>Key Issues</h3>
           <p>First appearances, origins, and the books collectors hunt for.</p>
         </div>
         <div class="card reveal">
-          <div class="emoji">💎</div>
+          <div class="icon-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg></div>
           <h3>Graded Slabs</h3>
           <p>Certified books, ready for the shelf. Bid live and watch them cross.</p>
         </div>
         <div class="card reveal">
-          <div class="emoji">📚</div>
+          <div class="icon-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></div>
           <h3>Raw Books</h3>
           <p>Runs, singles, and long-box finds across every era.</p>
         </div>
         <div class="card reveal">
-          <div class="emoji">🔨</div>
+          <div class="icon-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 13-7.5 7.5a2.12 2.12 0 0 1-3-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg></div>
           <h3>Auction Steals</h3>
           <p>Low-start auctions all show long. The price is whatever the room says it is.</p>
         </div>
@@ -377,7 +419,7 @@
     <span class="burst reveal-burst" style="top:14px; left:6%; background:var(--white); animation-delay: 0.3s, 0.8s;">SOLD!</span>
     <h2 class="display reveal">Don't miss the next drop.</h2>
     <a class="btn reveal" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
-      ▶&nbsp; Follow @zedepoolcomics
+      <svg class="play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg> Follow @zedepoolcomics
     </a>
   </section>
 
