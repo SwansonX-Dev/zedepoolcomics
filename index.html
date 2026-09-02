@@ -316,15 +316,20 @@
     footer a:hover { text-decoration: underline; }
     footer .fine { margin-top: 10px; font-size: 0.78rem; color: #5c789f; }
 
-    /* On phones the text runs full-width, so the callouts move up into each
-       section's padding where nothing else lives, and shrink. */
+    .pos-pow { top: -30px; right: -26px; }
+    .pos-mint { top: -16px; right: 2%; }
+    .pos-live { top: -40px; right: 6%; }
+    .pos-sold { top: 14px; left: 6%; }
+
+    /* On phones the text runs full-width, so the callouts shrink and move up
+       into each section's padding, where no text lives. */
     @media (max-width: 760px) {
       .burst { font-size: 1rem; padding: 24px 20px; }
-      section { padding-top: 96px; }
-      .wrap > .burst { top: -78px; right: 6px; left: auto; }
-      .cta-band { padding-top: 104px; }
-      .cta-band > .burst { top: 14px; right: 14px; left: auto; }
-      .hero-logo .burst { top: -22px; right: -8px; }
+      section { padding-top: 100px; }
+      .pos-mint, .pos-live { top: -84px; right: 6px; left: auto; }
+      .cta-band { padding-top: 110px; }
+      .pos-sold { top: 16px; right: 14px; left: auto; }
+      .pos-pow { top: -22px; right: -8px; }
     }
 
     /* Respect users who prefer stillness. */
@@ -352,7 +357,7 @@
         <p class="hero-note">Free to follow. You'll get notified every time the show goes live.</p>
       </div>
       <div class="hero-logo">
-        <span class="burst" style="top:-30px; right:-26px; animation-delay: 0.9s, 1.4s;">POW!</span>
+        <span class="burst pos-pow" style="animation-delay: 0.9s, 1.4s;">POW!</span>
         <video id="logo-sting" src="assets/logo-sting.mp4" poster="assets/logo-final.jpg" width="720" height="720"
                muted playsinline preload="auto" title="Click to replay"
                style="cursor:pointer" aria-label="ZedePool Comics animated logo"></video>
@@ -362,7 +367,7 @@
 
   <section>
     <div class="wrap">
-      <span class="burst blue reveal-burst" style="top:-16px; right:2%; animation-delay: 0.2s, 0.7s;">MINT!</span>
+      <span class="burst blue reveal-burst pos-mint" style="animation-delay: 0.2s, 0.7s;">MINT!</span>
       <h2 class="section-title display reveal">What's on the show</h2>
       <p class="section-sub reveal">Every stream is a dig through the boxes. Here's the kind of stuff that crosses the table.</p>
       <div class="cards">
@@ -392,7 +397,7 @@
 
   <section class="how halftone">
     <div class="wrap">
-      <span class="burst white reveal-burst" style="top:-40px; right:6%; animation-delay: 0.25s, 0.75s;">LIVE!</span>
+      <span class="burst white reveal-burst pos-live" style="animation-delay: 0.25s, 0.75s;">LIVE!</span>
       <h2 class="section-title display reveal">New to Whatnot?</h2>
       <p class="section-sub reveal">It's live shopping: a comic shop, an auction house, and a hangout in one stream. Three steps and you're in.</p>
       <div class="steps">
@@ -416,7 +421,7 @@
   </section>
 
   <section class="cta-band">
-    <span class="burst reveal-burst" style="top:14px; left:6%; background:var(--white); animation-delay: 0.3s, 0.8s;">SOLD!</span>
+    <span class="burst white reveal-burst pos-sold" style="animation-delay: 0.3s, 0.8s;">SOLD!</span>
     <h2 class="display reveal">Don't miss the next drop.</h2>
     <a class="btn reveal" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
       <svg class="play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg> Follow @zedepoolcomics
