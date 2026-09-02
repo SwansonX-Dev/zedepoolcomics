@@ -23,10 +23,8 @@
   <meta name="twitter:description" content="Comic books sold live: key issues, graded slabs, raw books, and auction steals.">
   <meta name="twitter:image" content="https://zedepoolcomics.vercel.app/assets/logo-final.jpg">
   <link rel="preload" as="image" href="assets/logo-final.jpg" fetchpriority="high">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;800&display=swap"></noscript>
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/bangers-latin.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-var-latin.woff2" crossorigin>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -39,6 +37,23 @@
   }
   </script>
   <style>
+    @font-face {
+      font-family: "Bangers";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("assets/fonts/bangers-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026;
+    }
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url("assets/fonts/inter-var-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026;
+    }
+
     :root {
       --navy: #0b1e3a;
       --navy-deep: #071427;
@@ -332,6 +347,38 @@
       .pos-pow { top: -22px; right: -8px; }
     }
 
+    /* ---------- Sticky follow bar (phones, after the hero scrolls away) ---------- */
+    .follow-bar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 50;
+      display: none;
+      background: var(--navy-deep);
+      border-top: 3px solid var(--yellow);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      transform: translateY(110%);
+      transition: transform 0.25s ease;
+    }
+    .follow-bar.show { transform: translateY(0); }
+    .follow-bar a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: "Bangers", cursive;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      background: var(--yellow);
+      border-radius: 12px;
+      padding: 12px;
+      text-decoration: none;
+    }
+    .follow-bar svg { width: 14px; height: 14px; fill: currentColor; }
+    @media (max-width: 760px) {
+      .follow-bar { display: block; }
+    }
+
     /* Respect users who prefer stillness. */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -428,6 +475,13 @@
     </a>
   </section>
 
+  <div class="follow-bar" id="follow-bar" aria-hidden="true">
+    <a href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+      Follow on Whatnot
+    </a>
+  </div>
+
   <footer>
     <p>
       <strong>ZedePool Comics</strong> ·
@@ -450,6 +504,19 @@
         sting.currentTime = 0;
         sting.play().catch(function () {});
       });
+    })();
+
+    // On phones, a follow bar slides up once the hero (and its own follow
+    // button) has scrolled away.
+    (function () {
+      var bar = document.getElementById("follow-bar");
+      var hero = document.querySelector(".hero");
+      if (!bar || !hero || !("IntersectionObserver" in window)) return;
+      new IntersectionObserver(function (entries) {
+        var heroVisible = entries[0].isIntersecting;
+        bar.classList.toggle("show", !heroVisible);
+        bar.setAttribute("aria-hidden", String(heroVisible));
+      }).observe(hero);
     })();
 
     // Comic panel slam-in as sections scroll into view. Bursts inside a
@@ -482,6 +549,7 @@
       });
     })();
   </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>
