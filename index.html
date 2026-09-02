@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ZedePool Comics — Live comic book auctions on Whatnot</title>
-  <meta name="description" content="ZedePool Comics sells comic books live on Whatnot — key issues, slabs, raw books, and auction steals. Follow the show and never miss a drop.">
+  <meta name="description" content="ZedePool Comics sells comic books live on Whatnot: key issues, slabs, raw books, and auction steals. Follow the show and never miss a drop.">
   <link rel="icon" type="image/jpeg" href="assets/avatar.jpg">
-  <meta property="og:title" content="ZedePool Comics — Live on Whatnot">
+  <meta property="og:title" content="ZedePool Comics, live on Whatnot">
   <meta property="og:description" content="Comic books sold live: key issues, slabs, raw books, and auction steals. Follow ZedePool Comics on Whatnot.">
   <meta property="og:image" content="assets/avatar.jpg">
   <meta property="og:type" content="website">
@@ -32,13 +32,19 @@
       color: var(--ink);
       background: var(--paper);
       line-height: 1.6;
+      overflow-x: hidden;
     }
     .display { font-family: "Bangers", "Inter", cursive; letter-spacing: 0.03em; }
 
-    /* Halftone comic texture */
+    /* Halftone comic texture, slowly drifting */
     .halftone {
       background-image: radial-gradient(rgba(255,255,255,0.10) 1.2px, transparent 1.2px);
       background-size: 14px 14px;
+      animation: drift 24s linear infinite;
+    }
+    @keyframes drift {
+      from { background-position: 0 0; }
+      to { background-position: 140px 70px; }
     }
 
     .btn {
@@ -58,11 +64,58 @@
       transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
     }
     .btn:hover {
-      transform: translate(-2px, -2px);
+      transform: translate(-2px, -2px) rotate(-1deg);
       box-shadow: 8px 8px 0 var(--ink);
       background: var(--yellow-deep);
     }
     .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+
+    /* ---------- Comic callout bursts ---------- */
+    .burst {
+      position: absolute;
+      font-family: "Bangers", cursive;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      padding: 8px 16px;
+      font-size: 1.25rem;
+      line-height: 1;
+      clip-path: polygon(
+        50% 0%, 61% 12%, 76% 5%, 79% 21%, 95% 20%, 90% 36%, 100% 44%,
+        89% 55%, 96% 70%, 80% 72%, 80% 88%, 65% 83%, 56% 97%, 46% 84%,
+        31% 93%, 29% 76%, 12% 78%, 19% 62%, 4% 55%, 15% 44%, 6% 30%,
+        22% 28%, 22% 11%, 38% 16%
+      );
+      padding: 26px 22px;
+      transform: rotate(-8deg) scale(0);
+      animation: burst-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                 burst-bob 3.4s ease-in-out 0.5s infinite;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+    }
+    .burst.blue { background: var(--blue-bright); color: var(--white); }
+    .burst.white { background: var(--white); }
+    @keyframes burst-pop {
+      0% { transform: rotate(-20deg) scale(0); }
+      70% { transform: rotate(-4deg) scale(1.15); }
+      100% { transform: rotate(-8deg) scale(1); }
+    }
+    @keyframes burst-bob {
+      0%, 100% { transform: rotate(-8deg) scale(1) translateY(0); }
+      50% { transform: rotate(-5deg) scale(1.04) translateY(-7px); }
+    }
+
+    /* ---------- Scroll reveal (comic panel slam) ---------- */
+    .reveal { opacity: 0; transform: translateY(26px) rotate(-1.2deg) scale(0.96); }
+    .reveal.in {
+      animation: slam-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes slam-in {
+      0% { opacity: 0; transform: translateY(26px) rotate(-1.2deg) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    }
 
     /* ---------- Hero ---------- */
     .hero {
@@ -98,11 +151,17 @@
       border-radius: 999px;
       padding: 5px 14px;
       margin-bottom: 20px;
+      animation: slam-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
     }
     .hero h1 {
       font-size: clamp(3rem, 8vw, 5.2rem);
       line-height: 0.95;
       text-shadow: 4px 4px 0 rgba(0,0,0,0.35);
+      animation: title-slam 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+    }
+    @keyframes title-slam {
+      0% { opacity: 0; transform: scale(1.6) rotate(-3deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
     }
     .hero h1 .pop { color: var(--blue-bright); }
     .hero p.lede {
@@ -110,7 +169,9 @@
       font-size: 1.15rem;
       color: #c9dcf5;
       max-width: 46ch;
+      animation: slam-in 0.5s ease 0.4s backwards;
     }
+    .hero .btn { animation: slam-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.55s backwards; }
     .live-dot {
       display: inline-block; width: 10px; height: 10px; border-radius: 50%;
       background: #ff4d4d; margin-right: 8px;
@@ -120,7 +181,7 @@
       0%, 100% { box-shadow: 0 0 0 0 rgba(255,77,77,0.55); }
       50% { box-shadow: 0 0 0 9px rgba(255,77,77,0); }
     }
-    .hero-note { margin-top: 14px; font-size: 0.9rem; color: #9db8dd; }
+    .hero-note { margin-top: 14px; font-size: 0.9rem; color: #9db8dd; animation: slam-in 0.5s ease 0.7s backwards; }
 
     .hero-logo {
       flex: 0 0 auto;
@@ -130,12 +191,23 @@
       box-shadow: 10px 10px 0 rgba(0,0,0,0.35);
       padding: 18px;
       transform: rotate(3deg);
+      animation: logo-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s backwards,
+                 logo-float 5s ease-in-out 1.1s infinite;
+      position: relative;
     }
-    .hero-logo img { display: block; width: min(240px, 60vw); height: auto; border-radius: 10px; }
+    @keyframes logo-in {
+      0% { opacity: 0; transform: rotate(14deg) scale(0.6) translateY(30px); }
+      100% { opacity: 1; transform: rotate(3deg) scale(1) translateY(0); }
+    }
+    @keyframes logo-float {
+      0%, 100% { transform: rotate(3deg) translateY(0); }
+      50% { transform: rotate(2deg) translateY(-9px); }
+    }
+    .hero-logo img, .hero-logo video { display: block; width: min(240px, 60vw); height: auto; border-radius: 10px; }
 
     /* ---------- Sections ---------- */
-    section { padding: 72px 24px; }
-    .wrap { max-width: 1000px; margin: 0 auto; }
+    section { padding: 72px 24px; position: relative; }
+    .wrap { max-width: 1000px; margin: 0 auto; position: relative; }
     .section-title {
       font-size: clamp(2.2rem, 5vw, 3.2rem);
       margin-bottom: 8px;
@@ -150,7 +222,9 @@
       border-radius: 16px;
       box-shadow: 6px 6px 0 var(--ink);
       padding: 26px 22px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+    .card:hover { transform: translate(-3px, -3px) rotate(-0.6deg); box-shadow: 9px 9px 0 var(--ink); }
     .card .emoji { font-size: 2rem; }
     .card h3 { font-family: "Bangers", cursive; font-size: 1.5rem; letter-spacing: 0.04em; margin: 10px 0 6px; color: var(--navy); }
     .card p { font-size: 0.95rem; color: #3d5675; }
@@ -159,13 +233,15 @@
     .how { background: var(--navy); color: var(--white); }
     .how .section-title { color: var(--white); }
     .how .section-sub { color: #b7cdea; }
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; counter-reset: step; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
     .step {
       border: 2px solid rgba(255,255,255,0.25);
       border-radius: 16px;
       padding: 26px 22px;
       background: rgba(255,255,255,0.04);
+      transition: transform 0.15s ease, border-color 0.15s ease;
     }
+    .step:hover { transform: translateY(-4px); border-color: var(--yellow); }
     .step-num {
       font-family: "Bangers", cursive;
       font-size: 2.4rem;
@@ -182,6 +258,8 @@
       border-bottom: 4px solid var(--ink);
       text-align: center;
       padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
     }
     .cta-band h2 { font-size: clamp(2.2rem, 5.5vw, 3.4rem); color: var(--ink); margin-bottom: 22px; }
     .cta-band .btn { background: var(--navy); color: var(--white); }
@@ -198,6 +276,12 @@
     footer a { color: var(--blue-bright); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
     footer .fine { margin-top: 10px; font-size: 0.78rem; color: #5c789f; }
+
+    /* Respect users who prefer stillness. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -208,45 +292,49 @@
         <span class="kicker"><span class="live-dot"></span>Selling live on Whatnot</span>
         <h1 class="display">ZedePool <span class="pop">Comics</span></h1>
         <p class="lede">
-          Comic books sold live — key issues, graded slabs, raw books, and
+          Comic books sold live: key issues, graded slabs, raw books, and
           auction steals that start at a buck. Pull up a chair, hit follow,
           and catch the next show.
         </p>
         <a class="btn" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
           ▶&nbsp; Follow on Whatnot
         </a>
-        <p class="hero-note">Free to follow — you'll get notified every time the show goes live.</p>
+        <p class="hero-note">Free to follow. You'll get notified every time the show goes live.</p>
       </div>
       <div class="hero-logo">
-        <img src="assets/avatar.jpg" alt="ZedePool Comics logo" width="240" height="240">
+        <span class="burst" style="top:-30px; right:-26px; animation-delay: 0.9s, 1.4s;">POW!</span>
+        <video id="logo-sting" src="assets/logo-sting.mp4" poster="assets/avatar.jpg"
+               muted playsinline preload="auto" title="Click to replay"
+               style="cursor:pointer" aria-label="ZedePool Comics animated logo"></video>
       </div>
     </div>
   </header>
 
   <section>
     <div class="wrap">
-      <h2 class="section-title display">What's on the show</h2>
-      <p class="section-sub">Every stream is a dig through the boxes — here's the kind of stuff that crosses the table.</p>
+      <span class="burst blue reveal-burst" style="top:-16px; right:2%; font-size:1.05rem; animation-delay: 0.2s, 0.7s;">MINT!</span>
+      <h2 class="section-title display reveal">What's on the show</h2>
+      <p class="section-sub reveal">Every stream is a dig through the boxes. Here's the kind of stuff that crosses the table.</p>
       <div class="cards">
-        <div class="card">
+        <div class="card reveal">
           <div class="emoji">🔑</div>
           <h3>Key Issues</h3>
           <p>First appearances, origins, and the books collectors hunt for.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="emoji">💎</div>
           <h3>Graded Slabs</h3>
-          <p>Certified books, ready for the shelf — bid live and watch them cross.</p>
+          <p>Certified books, ready for the shelf. Bid live and watch them cross.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="emoji">📚</div>
           <h3>Raw Books</h3>
           <p>Runs, singles, and long-box finds across every era.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="emoji">🔨</div>
           <h3>Auction Steals</h3>
-          <p>Low-start auctions all show long — the price is whatever the room says it is.</p>
+          <p>Low-start auctions all show long. The price is whatever the room says it is.</p>
         </div>
       </div>
     </div>
@@ -254,20 +342,21 @@
 
   <section class="how halftone">
     <div class="wrap">
-      <h2 class="section-title display">New to Whatnot?</h2>
-      <p class="section-sub">It's live shopping — like a comic shop, an auction house, and a hangout in one stream. Three steps and you're in.</p>
+      <span class="burst white reveal-burst" style="top:-40px; right:6%; font-size:1.05rem; animation-delay: 0.25s, 0.75s;">LIVE!</span>
+      <h2 class="section-title display reveal">New to Whatnot?</h2>
+      <p class="section-sub reveal">It's live shopping: a comic shop, an auction house, and a hangout in one stream. Three steps and you're in.</p>
       <div class="steps">
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">1</div>
           <h3>Grab the app (or use the web)</h3>
           <p>Whatnot is free on iOS, Android, and right in your browser.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">2</div>
           <h3>Follow ZedePool Comics</h3>
           <p>Hit follow and you'll get a ping whenever the show goes live.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">3</div>
           <h3>Bid, win, done</h3>
           <p>Everything ships straight to your door. Buyer protection is built in.</p>
@@ -277,8 +366,9 @@
   </section>
 
   <section class="cta-band">
-    <h2 class="display">Don't miss the next drop.</h2>
-    <a class="btn" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
+    <span class="burst reveal-burst" style="top:14px; left:6%; background:var(--white); font-size:1.05rem; animation-delay: 0.3s, 0.8s;">SOLD!</span>
+    <h2 class="display reveal">Don't miss the next drop.</h2>
+    <a class="btn reveal" href="https://www.whatnot.com/user/zedepoolcomics" target="_blank" rel="noopener">
       ▶&nbsp; Follow @zedepoolcomics
     </a>
   </section>
@@ -290,6 +380,53 @@
     </p>
     <p class="fine">© 2026 ZedePool Comics. Site by <a href="https://swansonx.com" target="_blank" rel="noopener">SwansonX</a>.</p>
   </footer>
+
+  <script>
+    // The logo sting plays once on load (unless the visitor prefers reduced
+    // motion) and replays on click/tap.
+    (function () {
+      var sting = document.getElementById("logo-sting");
+      if (!sting) return;
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!still) {
+        sting.play().catch(function () {});
+      }
+      sting.addEventListener("click", function () {
+        sting.currentTime = 0;
+        sting.play().catch(function () {});
+      });
+    })();
+
+    // Comic panel slam-in as sections scroll into view. Bursts inside a
+    // section hold their pop until the section is seen, then fire once.
+    (function () {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      document.querySelectorAll(".reveal-burst").forEach(function (el) {
+        el.style.animationPlayState = "paused";
+      });
+      var seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("in");
+          if (entry.target.classList.contains("reveal-burst")) {
+            entry.target.style.animationPlayState = "running";
+          }
+          seen.unobserve(entry.target);
+        });
+      }, { threshold: 0.2 });
+      var stagger = {};
+      document.querySelectorAll(".reveal").forEach(function (el) {
+        var section = el.closest("section") ?? document.body;
+        var key = section.className;
+        stagger[key] = (stagger[key] ?? -1) + 1;
+        el.style.animationDelay = (stagger[key] * 0.09) + "s";
+        seen.observe(el);
+      });
+      document.querySelectorAll(".reveal-burst").forEach(function (el) {
+        seen.observe(el);
+      });
+    })();
+  </script>
 
 </body>
 </html>
